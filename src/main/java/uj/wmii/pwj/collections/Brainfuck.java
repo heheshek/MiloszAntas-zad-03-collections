@@ -1,5 +1,6 @@
 package uj.wmii.pwj.collections;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 
@@ -30,7 +31,17 @@ public interface Brainfuck {
      * @throws IllegalArgumentException if: program is null or empty, OR out is null, OR in is null, OR stackSize is below 1.
      */
     static Brainfuck createInstance(String program, PrintStream out, InputStream in, int stackSize) {
-        return null;
+        if (program == null || program.isEmpty())
+            throw new IllegalArgumentException("Program cannot be null or empty");
+        if (out == null)
+            throw new IllegalArgumentException("Output stream cannot be null");
+        if (in == null)
+            throw new IllegalArgumentException("Input stream cannot be null");
+        if (stackSize < 1)
+            throw new IllegalArgumentException("Stack size must be at least 1");
+
+        return new BrainfuckInterpreter(program, out, in, stackSize);
     }
 
 }
+
